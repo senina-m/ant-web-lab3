@@ -9,5 +9,13 @@
 </h:head>
 <h:body>
     Hello, world!
+    <h:form>
+        <h:inputText id="firstNumber"
+                     value="#{calculator.firstNumber}"/>
+        <h:inputText id="secondNumber"
+                     value="#{calculator.secondNumber}"/>
+        <h:commandButton value="Click me" action="#{calculator.add()}"/>
+    </h:form>
+    #{calculator.result}
 </h:body>
 </html>
