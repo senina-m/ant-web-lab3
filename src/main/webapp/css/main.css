@@ -44,7 +44,7 @@ body {
     font-size: 16px;
     margin: 0;
 }
-header {
+div.header {
     font-family: monospace;
     background-color: var(--additional-background-color);
     color: var(--basic-background-color);
@@ -91,13 +91,13 @@ img {
     flex-basis: 32%;
     min-width: 400px;
 }
-form * {
+.form * {
     margin: 0.5%;
 }
-form > * {
+.form > * {
     margin: 1%;
 }
-input[type="button"], div.for_link {
+input[type="button"], div.for_link, .r_button {
     width: 60px;
     background-color: var(--basic-button-color);
     color: white;
@@ -105,10 +105,10 @@ input[type="button"], div.for_link {
     border: 0;
     padding: 3px 6px;
 }
-input[type="button"]:hover {
+input[type="button"]:hover, .r_button:hover {
     background-color: var(--hover-button-color);
 }
-input[type="button"].active {
+input[type="button"].active, .r_button.active {
     background-color: var(--pressed-button-color);
 }
 input#bthSubmit {

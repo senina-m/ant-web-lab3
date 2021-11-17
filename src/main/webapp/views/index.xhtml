@@ -56,15 +56,15 @@
                     </p>
                     <p id="r-input">
                         <h:outputLabel value="Радиус области R:"/> <br/>
-                        <h:commandLink value="1"/>
-                        <h:commandLink value="2"/>
-                        <h:commandLink value="3"/>
-                        <h:commandLink value="4"/>
-                        <h:commandLink value="5"/>
+                        <h:commandLink value="1" type="button" styleClass="r_button"/>
+                        <h:commandLink value="2" type="button" styleClass="r_button"/>
+                        <h:commandLink value="3" type="button" styleClass="r_button"/>
+                        <h:commandLink value="4" type="button" styleClass="r_button"/>
+                        <h:commandLink value="5" type="button" styleClass="r_button"/>
                         <span class="hide" id="r-error">R должно быть выбрано только одно и лишь из представленных здесь</span>
                     </p>
                     <p>
-                        <h:commandButton value="Отправить"/>
+                        <h:commandButton value="Отправить" action="#{shotList.addShot(shot)}"/>
                     </p>
                 </h:form>
             </div>
@@ -72,22 +72,22 @@
     </div>
     <h2>Результаты:</h2>
     <div id="result-table">
-        <h:dataTable value="#{shotList.shotList}" var="shotEntry">
+        <h:dataTable value="#{shotList.shotList}" var="shotEntity">
             <h:column>
                 <f:facet name="header">X</f:facet>
-                <h:outputText value="#{shotEntry.x}"/>
+                <h:outputText value="#{shotEntity.x}"/>
             </h:column>
             <h:column>
                 <f:facet name="header">Y</f:facet>
-                <h:outputText value="#{shotEntry.y}"/>
+                <h:outputText value="#{shotEntity.y}"/>
             </h:column>
             <h:column>
                 <f:facet name="header">R</f:facet>
-                <h:outputText value="#{shotEntry.r}"/>
+                <h:outputText value="#{shotEntity.r}"/>
             </h:column>
             <h:column>
                 <f:facet name="header">Попали?</f:facet>
-                <h:outputText value="#{shotEntry.isHit}"/>
+                <h:outputText value="#{shotEntity.hit? 'Да' : 'Нет'}"/>
             </h:column>
         </h:dataTable>
     </div>

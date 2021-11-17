@@ -17,5 +17,5 @@ import javax.faces.bean.RequestScoped;
 public class ShotBean {
    private double x;
    private double y;
-   private int r;
+   private int r = 5;
 }

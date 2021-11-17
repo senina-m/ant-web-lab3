@@ -33,5 +33,13 @@ public class ShotEntity {
     @Column(name = "r")
     private int r;
     @Column(name = "is_hit")
-    private boolean isHit;
+    private boolean hit;
+
+    public ShotEntity(double x, double y, int r, boolean isHit) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+        this.hit = isHit;
+        this.id = (int) Math.round(Math.random() * 1000);
+    }
 }

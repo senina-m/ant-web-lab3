@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -16,5 +17,9 @@ import java.util.List;
 public class ShotListBean {
    @Getter
    @Setter
-   private List<ShotEntity> shotList;
+   private List<ShotEntity> shotList = new LinkedList<>();
+
+   public void addShot(ShotBean shot) {
+      shotList.add(new ShotEntity(shot.getX(), shot.getY(), shot.getR(), true));
+   }
 }
