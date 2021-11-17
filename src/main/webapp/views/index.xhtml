@@ -3,19 +3,94 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+<!-- TODO сделать через шаблон ui:composition и ui:define-->
 <h:head>
-    <title>Пример</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="icon" href="../img/favicon.ico" type="image/x-icon" />
+    <title>Третий бой</title>
 </h:head>
 <h:body>
-    Hello, world!
-    <h:form>
-        <h:inputText id="firstNumber"
-                     value="#{calculator.firstNumber}"/>
-        <h:inputText id="secondNumber"
-                     value="#{calculator.secondNumber}"/>
-        <h:commandButton value="Click me" action="#{calculator.add()}"/>
-    </h:form>
-    #{calculator.result}
+    <div class="header">
+        <p>
+            Натворила: Никонова Наталья Игоревна<br/>
+            Группа: P3212<br/>
+            Вариант: 31923<br/>
+        </p>
+    </div>
+    <div class="main">
+    <h1>Виртуальный тир: испытай свою меткость!</h1>
+    <div class="blocks">
+        <div>
+            <!--<div id="svg"></div>-->
+            <img src="../img/fieldBlue.PNG" alt="field"/>
+        </div>
+        <div>
+            <div class="to-form">
+                <h:form id="input-data" class="form">
+                    <p id="x-input">
+                        <h:outputLabel value="Координата точки X:" for="x"/> <br/>
+                        <h:selectOneRadio id="x"
+                                          layout="lineDirection"
+                                          a:placeholder="Х должно быть выбрано"
+                                          required="true" value="#{shot.x}">
+                            <f:selectItem itemLabel="-2" itemValue="-2"/>
+                            <f:selectItem itemLabel="-1.5" itemValue="-1.5"/>
+                            <f:selectItem itemLabel="-1" itemValue="-1"/>
+                            <f:selectItem itemLabel="-0.5" itemValue="-0.5"/>
+                            <f:selectItem itemLabel="0" itemValue="0"/>
+                            <f:selectItem itemLabel="0.5" itemValue="0.5"/>
+                            <f:selectItem itemLabel="1" itemValue="1"/>
+                            <f:selectItem itemLabel="1.5" itemValue="1.5"/>
+                            <f:selectItem itemLabel="2" itemValue="2"/>
+                        </h:selectOneRadio>
+                    </p>
+                    <p id="y-input">
+                        <h:outputLabel value="Координата точки Y:" for="y"/> <br/>
+                        <h:inputText id="y" maxlength="5" a:placeholder="Y должно быть числом между [-3, 3]" value="#{shot.y}">
+                            <f:validateRequired/>
+                            <f:validateDoubleRange minimum="-3" maximum="3"/>
+                        </h:inputText>
+                    </p>
+                    <p id="r-input">
+                        <h:outputLabel value="Радиус области R:"/> <br/>
+                        <h:commandLink value="1"/>
+                        <h:commandLink value="2"/>
+                        <h:commandLink value="3"/>
+                        <h:commandLink value="4"/>
+                        <h:commandLink value="5"/>
+                        <span class="hide" id="r-error">R должно быть выбрано только одно и лишь из представленных здесь</span>
+                    </p>
+                    <p>
+                        <h:commandButton value="Отправить"/>
+                    </p>
+                </h:form>
+            </div>
+        </div>
+    </div>
+    <h2>Результаты:</h2>
+    <div id="result-table">
+        <h:dataTable value="#{shotList.shotList}" var="shotEntry">
+            <h:column>
+                <f:facet name="header">X</f:facet>
+                <h:outputText value="#{shotEntry.x}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Y</f:facet>
+                <h:outputText value="#{shotEntry.y}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">R</f:facet>
+                <h:outputText value="#{shotEntry.r}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Попали?</f:facet>
+                <h:outputText value="#{shotEntry.isHit}"/>
+            </h:column>
+        </h:dataTable>
+    </div>
+    </div>
 </h:body>
 </html>

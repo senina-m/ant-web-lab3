@@ -1,0 +1,141 @@
+@font-face {
+    font-family: 'Anonymous Pro';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Anonymous Pro'),
+    url('../fonts/AnonymousPro-Regular.woff') format('woff');
+}
+@font-face {
+    font-family: 'Anonymous Pro';
+    font-style: normal;
+    font-weight: bold;
+    src: local('Anonymous Pro'),
+    url('../fonts/AnonymousPro-Bold.woff') format('woff');
+}
+@font-face {
+    font-family: 'Anonymous Pro';
+    font-style: italic;
+    font-weight: bold;
+    src: local('Anonymous Pro'),
+    url('../fonts/AnonymousPro-BoldItalic.woff') format('woff');
+}
+@font-face {
+    font-family: 'Anonymous Pro';
+    font-style: italic;
+    font-weight: normal;
+    src: local('Anonymous Pro'),
+    url('../fonts/AnonymousPro-Italic.woff') format('woff');
+}
+:root {
+    --basic-background-color: #E6E6D7;
+    --basic-text-color: #152410;
+    --hover-button-color: #748C5D;
+    --pressed-button-color: #41553C;
+    --basic-button-color: #AF412D;
+    --additional-background-color: #CD9575;
+
+}
+* {
+    font-family: Anonymous Pro, monospace;
+}
+body {
+    color: var(--basic-text-color);
+    background-color: var(--basic-background-color);
+    font-size: 16px;
+    margin: 0;
+}
+header {
+    font-family: monospace;
+    background-color: var(--additional-background-color);
+    color: var(--basic-background-color);
+    text-align: right;
+    padding: 1%;
+    font-size: 20px;
+}
+table {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-collapse: collapse;
+    text-align: center;
+}
+table, td, th {
+    border: 2px solid var(--pressed-button-color);
+}
+table {
+    margin-bottom: 20px;
+}
+p {
+    margin: 0;
+}
+h1, h2, h3 {
+    text-align: center;
+    color: var(--pressed-button-color);
+}
+img {
+    display: block;
+    margin: 0 auto;
+}
+.blocks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-evenly;
+    padding: 0 3%;
+}
+.blocks > div {
+    background-color: white;
+    margin: 1%;
+    padding: 1%;
+    border-radius: 10px;
+    flex-basis: 32%;
+    min-width: 400px;
+}
+form * {
+    margin: 0.5%;
+}
+form > * {
+    margin: 1%;
+}
+input[type="button"], div.for_link {
+    width: 60px;
+    background-color: var(--basic-button-color);
+    color: white;
+    border-radius: 3px;
+    border: 0;
+    padding: 3px 6px;
+}
+input[type="button"]:hover {
+    background-color: var(--hover-button-color);
+}
+input[type="button"].active {
+    background-color: var(--pressed-button-color);
+}
+input#bthSubmit {
+    font-size: 18px;
+    width: 110px;
+    padding: 8px;
+    background-color: var(--basic-button-color);
+    color: white;
+    border-radius: 5px;
+    border: 0;
+}
+input#bthSubmit:hover {
+    background-color: var(--pressed-button-color);
+}
+span {
+    font-size: 11px;
+    color: red;
+}
+span.hide {
+    display: none;
+}
+div.for_link {
+    margin: auto;
+    width: 170px;
+    padding: 10px;
+}
+div a {
+    text-decoration: none;
+    color: white;
+}
