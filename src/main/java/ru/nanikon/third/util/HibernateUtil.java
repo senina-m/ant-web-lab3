@@ -1,7 +1,7 @@
 package ru.nanikon.third.util;
 
-import ru.nanikon.third.model.ShotEntity;
-import ru.nanikon.third.model.UserEntity;
+import ru.nanikon.third.entity.ShotEntity;
+import ru.nanikon.third.entity.UserEntity;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;

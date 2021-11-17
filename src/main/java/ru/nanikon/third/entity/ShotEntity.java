@@ -1,4 +1,4 @@
-package ru.nanikon.third.model;
+package ru.nanikon.third.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,11 +35,11 @@ public class ShotEntity {
     @Column(name = "is_hit")
     private boolean hit;
 
-    public ShotEntity(double x, double y, int r, boolean isHit) {
+    public ShotEntity(double x, double y, int r) {
         this.x = x;
         this.y = y;
         this.r = r;
-        this.hit = isHit;
+        //this.hit = isHit;
         this.id = (int) Math.round(Math.random() * 1000);
     }
 }
