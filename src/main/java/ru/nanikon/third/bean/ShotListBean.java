@@ -1,6 +1,6 @@
-package com.example.third.bean;
+package ru.nanikon.third.bean;
 
-import com.example.third.model.ShotEntity;
+import ru.nanikon.third.model.ShotEntity;
 import lombok.Getter;
 import lombok.Setter;
 

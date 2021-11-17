@@ -1,7 +1,7 @@
-package com.example.third.util;
+package ru.nanikon.third.util;
 
-import com.example.third.model.ShotEntity;
-import com.example.third.model.UserEntity;
+import ru.nanikon.third.model.ShotEntity;
+import ru.nanikon.third.model.UserEntity;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;

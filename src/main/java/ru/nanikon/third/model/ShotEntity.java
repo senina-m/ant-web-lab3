@@ -1,4 +1,4 @@
-package com.example.third.model;
+package ru.nanikon.third.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

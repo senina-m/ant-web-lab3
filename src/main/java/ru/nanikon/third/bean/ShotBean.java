@@ -1,5 +1,4 @@
-package com.example.third.bean;
-
+package ru.nanikon.third.bean;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
