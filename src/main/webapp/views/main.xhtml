@@ -59,7 +59,7 @@
                         <h:message for="y" />
                     </p>
                     <p id="r-input">
-                        <h:outputLabel value="Радиус области R:"/> <br/>
+                        <h:outputLabel value="Радиус области R:"/> <br/> <br/>
                         <h:commandLink value="1" type="button" styleClass="r_button" id="r1">
                             <f:ajax/>
                         </h:commandLink>
@@ -82,10 +82,11 @@
                             </h:inputHidden>
                         </h:panelGroup>
                         <h:message for="hidden_r" />
-                        <span class="hide" id="r-error">R должно быть выбрано только одно и лишь из представленных здесь</span>
+                        <span class="hide error" id="r-error">R должно быть выбрано только одно и лишь из представленных здесь</span>
+                        <br/>
                     </p>
                     <p>
-                        <h:commandButton value="Отправить" action="#{shotList.addShot(shot)}">
+                        <h:commandButton value="Отправить" action="#{shotList.addShot(shot)}" styleClass="button_submit">
                             <!--<f:ajax execute="input-data" render="result-table"/>-->
                         </h:commandButton>
                     </p>
@@ -113,6 +114,11 @@
                 <h:outputText value="#{shotEntity.hit? 'Да' : 'Нет'}"/>
             </h:column>
         </h:dataTable>
+        <div class="for_link">
+            <h:link styleClass="link_to-index" outcome="goToIndex">
+                На стартовую страницу
+            </h:link>
+        </div>
     </div>
     </div>
 </h:body>

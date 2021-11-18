@@ -105,13 +105,16 @@ input[type="button"], div.for_link, .r_button {
     border: 0;
     padding: 3px 6px;
 }
+.r_button {
+    margin: 10px;
+}
 input[type="button"]:hover, .r_button:hover {
     background-color: var(--hover-button-color);
 }
 input[type="button"].active, .r_button.active {
     background-color: var(--pressed-button-color);
 }
-input#bthSubmit {
+.button_submit {
     font-size: 18px;
     width: 110px;
     padding: 8px;
@@ -120,10 +123,10 @@ input#bthSubmit {
     border-radius: 5px;
     border: 0;
 }
-input#bthSubmit:hover {
+.button_submit:hover {
     background-color: var(--pressed-button-color);
 }
-span {
+span.error {
     font-size: 11px;
     color: red;
 }
@@ -132,10 +135,13 @@ span.hide {
 }
 div.for_link {
     margin: auto;
-    width: 170px;
+    width: 200px;
     padding: 10px;
 }
 div a {
     text-decoration: none;
     color: white;
+}
+.datetime span {
+    text-align: center;
 }

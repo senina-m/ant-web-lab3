@@ -28,7 +28,7 @@ import java.util.List;
 @Getter
 @Setter
 public class ShotListBean {
-   private List<ShotEntity> shotList;
+   private List<ShotEntity> shotList = new LinkedList<>();
    private String sessionId;
 
    @ManagedProperty(value = "#{areaCheckService}")
@@ -43,20 +43,20 @@ public class ShotListBean {
       areaService.addShape(new Rhomb(Quarter.FIRST));
       areaService.addShape(new HorizontalRect(Quarter.SECOND));
       areaService.addShape(new LittleCircle(Quarter.THIRD));
-      sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
+      /*sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
       if (userService.isUserExists(sessionId)) {
          shotList = shotService.getAllBySessionId(sessionId);
       } else {
          shotList = new LinkedList<>();
          userService.addUser(new UserEntity(sessionId));
-      }
+      }*/
    }
 
    public void addShot(ShotBean shot) {
       ShotEntity newShot = new ShotEntity(shot.getX(), shot.getY(), shot.getR());
       areaService.checkArea(newShot);
-      newShot.setUser(userService.getUserBySessionId(sessionId));
-      shotService.addShot(newShot);
+      //newShot.setUser(userService.getUserBySessionId(sessionId));
+      //shotService.addShot(newShot);
       shotList.add(newShot);
    }
 }
