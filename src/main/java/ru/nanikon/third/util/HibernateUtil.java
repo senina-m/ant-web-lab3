@@ -1,5 +1,6 @@
 package ru.nanikon.third.util;
 
+import org.hibernate.cfg.Configuration;
 import ru.nanikon.third.entity.ShotEntity;
 import ru.nanikon.third.entity.UserEntity;
 import org.hibernate.SessionFactory;
@@ -24,7 +25,14 @@ public class HibernateUtil {
     private static StandardServiceRegistry registry;
 
     static {
-        try (Scanner scr = new Scanner(new FileReader(System.getenv("DATABASE_CONFIG")))) {
+        /*try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Драйвер не найден!");
+            e.printStackTrace();
+            System.exit(-1);
+        }
+        try (Scanner scr = new Scanner(new FileReader(System.getProperty("jboss.server.config.dir") + "/config"))) {
             String url = scr.nextLine().trim();
             String login = scr.nextLine().trim();
             String password = scr.nextLine().trim();
@@ -52,7 +60,12 @@ public class HibernateUtil {
         } catch (NoSuchElementException e) {
             System.out.println("В конфигуционном файле не хватает строк.");
             System.exit(-1);
-        }
+        }*/
+        Configuration configuration = new Configuration().configure();
+        configuration.addAnnotatedClass(UserEntity.class);
+        configuration.addAnnotatedClass(ShotEntity.class);
+        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
+        sessionFactory = configuration.buildSessionFactory(builder.build());
     }
 
     public static SessionFactory getSessionFactory() {

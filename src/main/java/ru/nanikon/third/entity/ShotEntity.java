@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * @author Natalia Nikonova
@@ -19,7 +20,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "shots")
-public class ShotEntity {
+public class ShotEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -39,7 +40,5 @@ public class ShotEntity {
         this.x = x;
         this.y = y;
         this.r = r;
-        //this.hit = isHit;
-        this.id = (int) Math.round(Math.random() * 1000);
     }
 }

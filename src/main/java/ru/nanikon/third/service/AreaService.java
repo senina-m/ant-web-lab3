@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * @author Natalia Nikonova
  */
-@ManagedBean(name = "areaCheck")
+@ManagedBean(name = "areaCheckService")
 @ApplicationScoped
 public class AreaService {
     private final ArrayList<Shape> parts = new ArrayList<>();
