@@ -134,8 +134,8 @@ span.hide {
     display: none;
 }
 div.for_link {
-    margin: auto;
-    width: 200px;
+    margin: auto auto 30px;
+    width: 210px;
     padding: 10px;
 }
 div a {

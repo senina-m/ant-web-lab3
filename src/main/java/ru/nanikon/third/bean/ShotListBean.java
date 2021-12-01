@@ -3,7 +3,7 @@ package ru.nanikon.third.bean;
 import ru.nanikon.third.entity.ShotEntity;
 import lombok.Getter;
 import lombok.Setter;
-import ru.nanikon.third.entity.UserEntity;
+import ru.nanikon.third.parser.ShotListJsonParser;
 import ru.nanikon.third.service.AreaService;
 import ru.nanikon.third.service.ShotService;
 import ru.nanikon.third.service.UserService;
@@ -16,7 +16,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,6 +29,7 @@ import java.util.List;
 public class ShotListBean {
    private List<ShotEntity> shotList = new LinkedList<>();
    private String sessionId;
+   private String jsonList;
 
    @ManagedProperty(value = "#{areaCheckService}")
    private AreaService areaService;
@@ -37,6 +37,8 @@ public class ShotListBean {
    private UserService userService;
    @ManagedProperty(value = "#{shotService}")
    private ShotService shotService;
+   @ManagedProperty(value = "#{parser}")
+   private ShotListJsonParser shotListJsonParser;
 
    @PostConstruct
    private void init() {
@@ -58,5 +60,6 @@ public class ShotListBean {
       //newShot.setUser(userService.getUserBySessionId(sessionId));
       //shotService.addShot(newShot);
       shotList.add(newShot);
+      jsonList = shotListJsonParser.fromObjectToJson(shotList);
    }
 }
