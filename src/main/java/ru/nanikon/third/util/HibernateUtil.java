@@ -21,7 +21,7 @@ import java.util.Scanner;
  * @author Natalia Nikonova
  */
 public class HibernateUtil {
-    private static SessionFactory sessionFactory;
+    private static final SessionFactory sessionFactory;
     private static StandardServiceRegistry registry;
 
     static {
@@ -61,11 +61,17 @@ public class HibernateUtil {
             System.out.println("В конфигуционном файле не хватает строк.");
             System.exit(-1);
         }*/
-        Configuration configuration = new Configuration().configure();
-        configuration.addAnnotatedClass(UserEntity.class);
-        configuration.addAnnotatedClass(ShotEntity.class);
-        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
-        sessionFactory = configuration.buildSessionFactory(builder.build());
+        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure()
+                .build();
+        try {
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+        } catch (Exception e) {
+            StandardServiceRegistryBuilder.destroy(registry);
+            throw e;
+        }
     }
 
     public static SessionFactory getSessionFactory() {

@@ -29,7 +29,13 @@ public class UserDAO {
    public UserEntity findBySessionId(String sessionId) {
       Session session = HibernateUtil.getSessionFactory().openSession();
       Query<UserEntity> query = session.createQuery("from UserEntity where sessionId = :sessionId").setParameter("sessionId", sessionId);
-      UserEntity user = query.list().get(0);
+      UserEntity user;
+      try {
+         user = query.list().get(0);
+      } catch (IndexOutOfBoundsException e) {
+         session.close();
+         return null;
+      }
       session.close();
       return user;
    }

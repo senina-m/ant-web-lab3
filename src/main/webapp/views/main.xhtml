@@ -7,7 +7,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<!-- TODO сделать через шаблон ui:composition и ui:define-->
 <h:head>
     <link rel="stylesheet" href="../css/main.css" />
     <link rel="icon" href="../img/favicon.ico" type="image/x-icon" />
@@ -50,15 +49,16 @@
                             <f:selectItem itemLabel="1.5" itemValue="1.5"/>
                             <f:selectItem itemLabel="2" itemValue="2"/>
                         </h:selectOneRadio>
+                        <br/>
                         <h:message for="x" />
                     </p>
                     <p id="y-input">
-                        <h:outputLabel value="Координата точки Y:" for="y"/> <br/>
+                        <h:outputLabel value="Координата точки Y:"/> <br/>
                         <h:inputText id="y" maxlength="5" a:placeholder="Y должно быть числом между [-3, 3]" value="#{shot.y}">
                             <f:validateRequired/>
                             <f:validateDoubleRange minimum="-3" maximum="3"/>
-                        </h:inputText>
-                        <h:message for="y" />
+                        </h:inputText> <br/>
+                        <h:message for="y" id="label-for-y"/>
                     </p>
                     <p id="r-input">
                         <h:outputLabel value="Радиус области R:"/> <br/> <br/>
@@ -89,7 +89,7 @@
                     </p>
                     <p>
                         <h:commandButton value="Отправить" styleClass="button_submit" action="#{shotList.addShot(shot)}">
-                            <f:ajax execute="input-data" render="input-data:hidden_json result-table"/>
+                            <f:ajax execute="input-data" render="input-data:label-for-y input-data:hidden_json result-table"/>
                         </h:commandButton>
                         <p:remoteCommand name="svgAction" action="#{shotList.addShot(shot)}" update="result-table input-data:hidden_json"/>
                     </p>

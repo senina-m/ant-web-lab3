@@ -143,5 +143,6 @@ div a {
     color: white;
 }
 .datetime span {
+    margin: auto;
     text-align: center;
 }
