@@ -48,7 +48,6 @@ public class ShotListBean {
       areaService.addShape(new HorizontalRect(Quarter.SECOND));
       areaService.addShape(new LittleCircle(Quarter.THIRD));
       sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
-      System.out.println(sessionId);
       if (userService.isUserExists(sessionId)) {
          shotList = shotService.getAllBySessionId(sessionId);
       } else {
@@ -61,9 +60,9 @@ public class ShotListBean {
 
    public void addShot(ShotBean shot) {
       double scale = Math.pow(10, 5);
-      ShotEntity newShot = new ShotEntity(shot.getX(), Math.ceil(shot.getY() * scale) / scale, shot.getR());
+      UserEntity owner = userService.getUserBySessionId(sessionId);
+      ShotEntity newShot = new ShotEntity(owner, shot.getX(), Math.ceil(shot.getY() * scale) / scale, shot.getR());
       areaService.checkArea(newShot);
-      newShot.setUser(userService.getUserBySessionId(sessionId));
       shotService.addShot(newShot);
       shotList.add(newShot);
       jsonList = shotListJsonParser.fromObjectToJson(shotList);

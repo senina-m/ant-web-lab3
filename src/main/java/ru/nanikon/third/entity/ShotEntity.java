@@ -1,5 +1,6 @@
 package ru.nanikon.third.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,11 +19,12 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "shots")
 public class ShotEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -36,7 +38,8 @@ public class ShotEntity implements Serializable {
     @Column(name = "is_hit")
     private boolean hit;
 
-    public ShotEntity(double x, double y, int r) {
+    public ShotEntity(UserEntity owner, double x, double y, int r) {
+        this.user = owner;
         this.x = x;
         this.y = y;
         this.r = r;

@@ -4,12 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 import ru.nanikon.third.entity.UserEntity;
 import ru.nanikon.third.util.HibernateUtil;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.persistence.PersistenceException;
 
 /**
  * @author Natalia Nikonova
@@ -19,32 +21,26 @@ import javax.faces.bean.ManagedBean;
 @Getter
 @Setter
 public class UserDAO {
-   public UserEntity findById(int id) {
-      Session session = HibernateUtil.getSessionFactory().openSession();
-      UserEntity user = session.get(UserEntity.class, id);
-      session.close();
-      return user;
-   }
 
    public UserEntity findBySessionId(String sessionId) {
-      Session session = HibernateUtil.getSessionFactory().openSession();
-      Query<UserEntity> query = session.createQuery("from UserEntity where sessionId = :sessionId").setParameter("sessionId", sessionId);
-      UserEntity user;
-      try {
+      UserEntity user = null;
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         Query<UserEntity> query = session.createQuery("from UserEntity where sessionId = :sessionId").setParameter("sessionId", sessionId);
          user = query.list().get(0);
-      } catch (IndexOutOfBoundsException e) {
-         session.close();
-         return null;
+      } catch (IndexOutOfBoundsException ignored) {
       }
-      session.close();
       return user;
    }
 
-   public void save(UserEntity user) {
-      Session session = HibernateUtil.getSessionFactory().openSession();
-      Transaction transaction = session.beginTransaction();
-      session.save(user);
-      transaction.commit();
-      session.close();
+   public int save(UserEntity user) {
+      int id;
+      try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+         Transaction transaction = session.beginTransaction();
+         id = (int) session.save(user);
+         transaction.commit();
+      } catch (PersistenceException e) {
+         id = findBySessionId(user.getSessionId()).getId();
+      }
+      return id;
    }
 }

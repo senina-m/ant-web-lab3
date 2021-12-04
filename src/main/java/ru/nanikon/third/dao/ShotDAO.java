@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 import ru.nanikon.third.entity.ShotEntity;
 import ru.nanikon.third.util.HibernateUtil;
@@ -20,12 +21,13 @@ import java.util.List;
 @Getter
 @Setter
 public class ShotDAO {
-    public void save(ShotEntity shot) {
+    public int save(ShotEntity shot) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(shot);
+        int id = (int) session.save(shot);
         transaction.commit();
         session.close();
+        return id;
     }
 
     public List<ShotEntity> findAllBySessionId(String sessionId) {

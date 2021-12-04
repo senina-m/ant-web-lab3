@@ -28,10 +28,13 @@ public class UserService {
         userDAO.save(user);
     }
 
-    public UserEntity getUserBySessionId(String id) {
-        if (!isUserExists(id)) {
-            addUser(new UserEntity(id));
+    public UserEntity getUserBySessionId(String sessionId) {
+        UserEntity user = userDAO.findBySessionId(sessionId);
+        if (user == null) {
+            user = new UserEntity(sessionId);
+            int id = userDAO.save(user);
+            user.setId(id);
         }
-        return userDAO.findBySessionId(id);
+        return user;
     }
 }
