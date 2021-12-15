@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 import ru.nanikon.third.entity.UserEntity;
 import ru.nanikon.third.util.HibernateUtil;
@@ -21,7 +20,6 @@ import javax.persistence.PersistenceException;
 @Getter
 @Setter
 public class UserDAO {
-
    public UserEntity findBySessionId(String sessionId) {
       UserEntity user = null;
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -37,6 +35,7 @@ public class UserDAO {
       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
          Transaction transaction = session.beginTransaction();
          id = (int) session.save(user);
+         System.out.println("user id " + id + user.getSessionId());
          transaction.commit();
       } catch (PersistenceException e) {
          id = findBySessionId(user.getSessionId()).getId();

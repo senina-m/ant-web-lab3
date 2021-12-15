@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "users",
+@Table(name = "app_users",
         uniqueConstraints = @UniqueConstraint(columnNames = "session_id"))
 public class UserEntity implements Serializable {
     @Id
