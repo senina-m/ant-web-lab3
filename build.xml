@@ -1,31 +1,16 @@
 <?xml version="1.0"?>
-<project name="HelloWorld" default="compile" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="ant-web" default="compile" xmlns:ivy="antlib:org.apache.ivy.ant">
 
     <!-- define names of directories -->
-    <property name="src" location="src"/>
+    <property name="lib" location="lib"/>
     <property name="build" location="build"/>
-    <property name="classes" location="${build}/classes"/>
-    <property name="lib" location="lib" />
+    <property name="main.build.dir" value="${build}/classes/java/main"/>
+    <property name="main.src.dir" value="src/main/java"/>
+    <property name="test.build.dir" value="${build}/classes/java/test"/>
+    <property name="test.src.dir" value="src/test/java"/>
+    <property name="test.resources.dir" value="src/test/resources"/>
     <!-- Проверяет установлен ли ivy проверяя есть ли такой (org.apache.ivy.Main) класс в classpath -->
     <available classname="org.apache.ivy.Main" property="ivy.installed" />
-
-
-    <target name="compile" depends="retrive">
-        <mkdir dir="${classes}"/>
-        <javac srcdir="${src}" destdir="${classes}" includeAntRuntime="false" source="1.8" target="1.8"/>
-    </target>
-
-
-    <target name="run" depends="compile">
-        <java classname="${ant.project.name}" classpath="${classes}"/>
-        <echo>Project compiled and clsses are in build/classes directory</echo>
-    </target>
-
-
-    <target name="clean">
-        <delete dir="${build}"/>
-    </target>
-
 
     <target name="install-ivy" unless="ivy.installed" description="Install ivy">
        <mkdir dir="${user.home}/.ant/lib"/>
@@ -48,20 +33,53 @@
         <ivy:retrieve sync="true" type="jar" pattern="${lib}/[conf]/[artifact].[ext]"/>
     </target>
 
-    <target name="test" depends="compile">
-        <junit>
+    <!-- COMPILE TASKS -->
+
+    <target name="main-compile" depends="retrive">
+        <mkdir dir="${main.build.dir}"/>
+        <javac srcdir="${main.src.dir}" destdir="${main.build.dir}" includeAntRuntime="false" source="1.8" target="1.8">
             <classpath>
-                <pathelement location="${classes}"/>
+                <path refid="compile.path"/>
             </classpath>
-            <test name="TestHello"/>
+        </javac>
+    </target>
+
+    <target name="test-compile" depends="retrive">
+        <mkdir dir="${test.build.dir}"/>
+        <javac srcdir="${test.src.dir}" destdir="${test.build.dir}" includeAntRuntime="false" source="1.8" target="1.8">
+            <classpath>
+                <path refid="test.path"/>
+                <pathelement location="${main.build.dir}"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="compile" depends="main-compile,test-compile">
+        <echo>Project compiled and calsses are in build/classes directory</echo>
+    </target>
+
+    <target name="build" depends="main-compile">
+        <jar destfile="${build}/${ant.project.name}.jar" basedir="${main.build.dir}" />
+    </target>
+
+    <target name="clean">
+        <delete dir="${main.build.dir}"/>
+        <delete dir="${test.build.dir}"/>
+    </target>
+
+    <target name="test" depends="compile">
+        <junit printsummary="on" haltonfailure="yes">
+            <classpath>
+                <path refid="test.path"/>
+                <pathelement location="${test.build.dir}"/>
+                <pathelement location="${main.build.dir}"/>
+                <pathelement location="${test.resources.dir}"/>
+            </classpath>
+            <formatter type="brief" usefile="false" />
+            <batchtest>
+                <fileset dir="${test.src.dir}" includes="**/*Test.java" excludes="**/AbstractDAOTest.java"/>
+            </batchtest>
         </junit>
     </target>
 
-    <target name="package" depends="compile">
-        <jar destfile="${build}/${ant.project.name}.jar" basedir="${classes}">
-            <manifest>
-                <attribute name="Main-Class" value="${ant.project.name}"/>
-            </manifest>
-        </jar>
-    </target>
 </project>
