@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<project name="HelloWorld" default="compile" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+    <!-- define names of directories -->
+    <property name="src" location="src"/>
+    <property name="build" location="build"/>
+    <property name="classes" location="${build}/classes"/>
+    <property name="lib" location="lib" />
+    <!-- Проверяет установлен ли ivy проверяя есть ли такой (org.apache.ivy.Main) класс в classpath -->
+    <available classname="org.apache.ivy.Main" property="ivy.installed" />
+
+
+    <target name="compile" depends="retrive">
+        <mkdir dir="${classes}"/>
+        <javac srcdir="${src}" destdir="${classes}" includeAntRuntime="false" source="1.8" target="1.8"/>
+    </target>
+
+
+    <target name="run" depends="compile">
+        <java classname="${ant.project.name}" classpath="${classes}"/>
+        <echo>Project compiled and clsses are in build/classes directory</echo>
+    </target>
+
+
+    <target name="clean">
+        <delete dir="${build}"/>
+    </target>
+
+
+    <target name="install-ivy" unless="ivy.installed" description="Install ivy">
+       <mkdir dir="${user.home}/.ant/lib"/>
+       <get dest="${user.home}/.ant/lib/ivy.jar" src="https://search.maven.org/remotecontent?filepath=org/apache/ivy/ivy/2.3.0/ivy-2.3.0.jar"/>
+       <fail message="Ivy has been installed. Run the build again"/>
+    </target>
+
+        <!-- RESOLVE CLASSPATHS -->
+    <target name="resolve" depends="install-ivy" description="Use ivy to resolve classpaths">
+        <ivy:resolve/>
+
+        <ivy:report todir='build/ivy' graph='false' xml='false'/>
+
+        <ivy:cachepath pathid="compile.path" conf="compile"/>
+        <ivy:cachepath pathid="runtime.path" conf="runtime"/>
+        <ivy:cachepath pathid="test.path"    conf="test"/>
+    </target>
+
+    <target name="retrive" depends="resolve" description="Use ivy to resolve classpaths">
+        <ivy:retrieve sync="true" type="jar" pattern="${lib}/[conf]/[artifact].[ext]"/>
+    </target>
+
+    <target name="test" depends="compile">
+        <junit>
+            <classpath>
+                <pathelement location="${classes}"/>
+            </classpath>
+            <test name="TestHello"/>
+        </junit>
+    </target>
+
+    <target name="package" depends="compile">
+        <jar destfile="${build}/${ant.project.name}.jar" basedir="${classes}">
+            <manifest>
+                <attribute name="Main-Class" value="${ant.project.name}"/>
+            </manifest>
+        </jar>
+    </target>
+</project>

@@ -1,0 +1,60 @@
+<ivy-module version="2.0">
+    <info organisation="itmo.p3212" module="lab3"/>
+
+    <configurations>
+        <conf name="compile" description="Required to compile application"/>
+        <conf name="runtime" description="Additional run-time dependencies" extends="compile"/>
+        <conf name="test"    description="Required for test only" extends="runtime"/>
+    </configurations>
+
+    <dependencies defaultconf="compile">
+        <dependency org="junit" name="junit" rev="4.13.1"/>
+        <dependency org="javax.faces" name="javax.faces-api" rev="2.3" conf="compile->default" />
+        <dependency org="javax.servlet" name="javax.servlet-api" rev="4.0.1" conf="compile->default"/>
+        <dependency org="org.hibernate" name="hibernate-core" rev="5.6.1.Final"/>
+
+        <!-- Upgraded version from 21.1.0.0 -->
+        <dependency org="com.oracle.database.jdbc" name="ojdbc8" rev="21.5.0.0" conf="compile->default" />
+        <dependency org="com.oracle.ojdbc" name="orai18n" rev="19.3.0.0" conf="compile->default" />
+        <dependency org="org.projectlombok" name="lombok" rev="1.18.22" conf="compile->default" />
+        <dependency org="org.projectlombok" name="lombok" rev="1.18.22"/>
+
+        <!-- Upgraded version from 2.12.1-->
+        <dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="2.13.2.2"/>
+        <!-- Upgraded version from 0.63.0.19-->
+        <dependency org="com.fasterxml.jackson.datatype" name="jackson-datatype-jsr310" rev="2.13.2"/>
+        <dependency org="org.primefaces" name="primefaces" rev="10.0.0"/>
+
+        <!-- Upgraded version from 4.13.2-->
+        <dependency org="org.junit.jupiter" name="junit-jupiter-api" rev="5.8.2"/>
+        <!-- Upgraded version from 4.13.2-->
+        <dependency org="org.junit.jupiter" name="junit-jupiter-engine" rev="5.8.2" conf="test->default"/>
+        <dependency org="org.mockito" name="mockito-core" rev="4.0.0" conf="test->default"/>
+        <dependency org="org.mockito" name="mockito-junit-jupiter" rev="4.0.0" conf="test->default"/>
+        <dependency org="com.h2database" name="h2" rev="2.0.202" conf="test->default"/>
+        <dependency org="org.dbunit" name="dbunit" rev="2.7.2" conf="test->default"/>
+    </dependencies>
+</ivy-module>
+
+<!-- implementation 'junit:junit:4.13.1'
+        compileOnly 'javax.faces:javax.faces-api:2.3'
+        compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+        implementation 'org.hibernate:hibernate-core:5.6.1.Final'
+
+        compileOnly 'com.oracle.database.jdbc:ojdbc8:21.1.0.0'
+        compileOnly 'com.oracle.ojdbc:orai18n:19.3.0.0'
+
+        compileOnly 'org.projectlombok:lombok:1.18.22'
+        annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+        implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.1'
+        implementation 'com.jwebmp.jackson.datatype:jackson-datatype-jsr310:0.63.0.19'
+
+        implementation 'org.primefaces:primefaces:10.0.0'
+
+        testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+        testCompileOnly('org.mockito:mockito-core:4.0.0')
+        testImplementation('org.mockito:mockito-junit-jupiter:4.0.0')
+        testImplementation('com.h2database:h2:2.0.202')
+        testImplementation('org.dbunit:dbunit:2.7.2') -->
