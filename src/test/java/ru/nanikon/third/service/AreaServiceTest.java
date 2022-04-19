@@ -1,7 +1,7 @@
 package ru.nanikon.third.service;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import ru.nanikon.third.entity.ShotEntity;
 import ru.nanikon.third.entity.UserEntity;
 import ru.nanikon.third.service.model.HorizontalRect;
@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author Natalia Nikonova
  */
-class AreaServiceTest {
+public class AreaServiceTest {
     private AreaService areaService;
     private UserEntity owner;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         areaService = new AreaService();
         areaService.addShape(new Rhomb(Quarter.FIRST));
@@ -28,7 +28,7 @@ class AreaServiceTest {
     }
 
     @Test
-    void checkArea_whenPointNotInTriangleAndInFirstQuarter_thenIsHitFalse() {
+    public void checkArea_whenPointNotInTriangleAndInFirstQuarter_thenIsHitFalse() {
         double x = 1;
         double y = 1;
         int r = 1;
@@ -38,7 +38,7 @@ class AreaServiceTest {
     }
 
     @Test
-    void checkArea_whenPointInTriangleAndInFirstQuarter_thenIsHitTrue() {
+    public void checkArea_whenPointInTriangleAndInFirstQuarter_thenIsHitTrue() {
         double x = 1;
         double y = 0;
         int r = 1;
@@ -48,7 +48,7 @@ class AreaServiceTest {
     }
 
     @Test
-    void checkArea_whenPointNotInRectAndInSecondQuarter_thenIsHitFalse() {
+    public void checkArea_whenPointNotInRectAndInSecondQuarter_thenIsHitFalse() {
         double x = -1;
         double y = 2;
         int r = 2;
@@ -58,7 +58,7 @@ class AreaServiceTest {
     }
 
     @Test
-    void checkArea_whenPointInRectAndInSecondQuarter_thenIsHitTrue() {
+    public void checkArea_whenPointInRectAndInSecondQuarter_thenIsHitTrue() {
         double x = -1;
         double y = 0.5;
         int r = 2;
@@ -68,7 +68,7 @@ class AreaServiceTest {
     }
 
     @Test
-    void checkArea_whenPointNotInCircleAndInThirdQuarter_thenIsHitFalse() {
+    public void checkArea_whenPointNotInCircleAndInThirdQuarter_thenIsHitFalse() {
         double x = -2;
         double y = -2;
         int r = 2;
@@ -78,7 +78,7 @@ class AreaServiceTest {
     }
 
     @Test
-    void checkArea_whenPointInCircleAndInThirdQuarter_thenIsHitTrue() {
+    public void checkArea_whenPointInCircleAndInThirdQuarter_thenIsHitTrue() {
         double x = -1;
         double y = -1;
         int r = 4;
@@ -88,7 +88,7 @@ class AreaServiceTest {
     }
 
     @Test
-    void checkArea_whenPointInFourthQuarter_thenIsHitFalse() {
+    public void checkArea_whenPointInFourthQuarter_thenIsHitFalse() {
         double x = -2;
         double y = -2;
         int r = 2;

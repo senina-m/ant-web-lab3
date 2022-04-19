@@ -17,8 +17,12 @@ import static org.dbunit.dataset.filter.DefaultColumnFilter.excludedColumnsTable
 /**
  * @author Natalia Nikonova
  */
-class UserDAOTest extends AbstractDAOTest {
+public class UserDAOTest extends AbstractDAOTest {
     private UserDAO userDAO;
+
+    public UserDAOTest() {
+        super();
+    }
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -28,7 +32,7 @@ class UserDAOTest extends AbstractDAOTest {
     }
 
     @Test
-    void findBySessionId_whenUserWithThisSessionIdExist_thenThisUserReturned() throws Exception {
+    public void test_findBySessionId_whenUserWithThisSessionIdExist_thenThisUserReturned() throws Exception {
         IDataSet expectedDataSet = getDataSet();
         ITable expectedTable = expectedDataSet.getTable("APP_USERS");
         IDataSet databaseDataSet = getConnection().createDataSet();
@@ -48,7 +52,7 @@ class UserDAOTest extends AbstractDAOTest {
     }
 
     @Test
-    void findBySessionId_whenUserWithThisSessionIdNotExist_thenNullReturned() throws Exception {
+    public void test_findBySessionId_whenUserWithThisSessionIdNotExist_thenNullReturned() throws Exception {
         String sessionId = "test-session-id-no-exist";
         UserEntity result = userDAO.findBySessionId(sessionId);
         Assertions.assertNull(result);
@@ -61,7 +65,7 @@ class UserDAOTest extends AbstractDAOTest {
     }
 
     @Test
-    void save_whenUserWithThisSessionIdNotExist_thenSaveUserAndNewIdReturned() throws Exception {
+    public void test_save_whenUserWithThisSessionIdNotExist_thenSaveUserAndNewIdReturned() throws Exception {
         String sessionId = "test2-session-id";
         UserEntity user = new UserEntity(sessionId);
         int id = userDAO.save(user);
@@ -78,7 +82,7 @@ class UserDAOTest extends AbstractDAOTest {
     }
 
     @Test
-    void save_whenUserWithThisSessionIdExist_thenNotSaveNewUserAndOldIdReturned() throws Exception {
+    public void test_save_whenUserWithThisSessionIdExist_thenNotSaveNewUserAndOldIdReturned() throws Exception {
         String sessionId = "test1-session-id";
         UserEntity user = new UserEntity(sessionId);
         int id = userDAO.save(user);

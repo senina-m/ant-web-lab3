@@ -19,9 +19,13 @@ import java.util.List;
  * @author Natalia Nikonova
  */
 
-class ShotDAOTest extends AbstractDAOTest {
+public class ShotDAOTest extends AbstractDAOTest {
     private ShotDAO shotDAO;
     private UserDAO userDAO;
+
+    public ShotDAOTest() {
+        super();
+    }
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -32,7 +36,7 @@ class ShotDAOTest extends AbstractDAOTest {
     }
 
     @Test
-    void findAllBySessionId_whenUserWithThisSessionIdNotExist_thenEmptyListReturned() throws Exception {
+    public void test_findAllBySessionId_whenUserWithThisSessionIdNotExist_thenEmptyListReturned() throws Exception {
         String sessionId = "test-session-id-no-exist";
         List<ShotEntity> result = shotDAO.findAllBySessionId(sessionId);
         List<ShotEntity> wait = new LinkedList<>();
@@ -46,7 +50,7 @@ class ShotDAOTest extends AbstractDAOTest {
     }
 
     @Test
-    void findAllBySessionId_whenUserWithThisSessionIdExistButNoShotsHave_thenEmptyListReturned() throws Exception {
+    public void test_findAllBySessionId_whenUserWithThisSessionIdExistButNoShotsHave_thenEmptyListReturned() throws Exception {
         String sessionId = "test3-session-id";
         List<ShotEntity> result = shotDAO.findAllBySessionId(sessionId);
         List<ShotEntity> wait = new LinkedList<>();
@@ -66,7 +70,7 @@ class ShotDAOTest extends AbstractDAOTest {
     }
 
     @Test
-    void findAllBySessionId_whenUserWithThisSessionIdExistAndShotsHave_thenListShotsReturned() throws Exception {
+    public void test_findAllBySessionId_whenUserWithThisSessionIdExistAndShotsHave_thenListShotsReturned() throws Exception {
         String sessionId = "test3-session-id";
         List<ShotEntity> result = shotDAO.findAllBySessionId(sessionId);
 
@@ -87,7 +91,7 @@ class ShotDAOTest extends AbstractDAOTest {
     }
 
     @Test
-    void saveShot_whenUserTransient_thenExceptionThrow() throws Exception {
+    public void test_saveShot_whenUserTransient_thenExceptionThrow() throws Exception {
         try {
             UserEntity owner = new UserEntity("test-session-id-not-exist");
             ShotEntity shot = new ShotEntity(owner, 0, 0, 3);
@@ -105,7 +109,7 @@ class ShotDAOTest extends AbstractDAOTest {
     }
 
     @Test
-    void saveShots_whenUserPersistent_thenSavedShotAndIdReturned() throws Exception {
+    public void test_saveShots_whenUserPersistent_thenSavedShotAndIdReturned() throws Exception {
         UserEntity owner = userDAO.findBySessionId("test1-session-id");
         ShotEntity shot = new ShotEntity(owner, 0, 0, 3);
         shot.setHit(true);

@@ -1,7 +1,7 @@
 package ru.nanikon.third.service;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -20,34 +20,34 @@ import static org.mockito.Mockito.when;
  */
 @ExtendWith(MockitoExtension.class)
 @RunWith(MockitoJUnitRunner.class)
-class UserServiceTest {
+public class UserServiceTest {
     private UserService userService;
 
     @Mock
     private UserDAO userDAO;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         userService = new UserService();
         userService.setUserDAO(userDAO);
     }
 
     @Test
-    void isUserExist_whenUserNotExist_thenReturnFalse() {
+    public void isUserExist_whenUserNotExist_thenReturnFalse() {
         String sessionId = "test-session-id";
         when(userDAO.findBySessionId(sessionId)).thenReturn(null);
         assertFalse(userService.isUserExists(sessionId));
     }
 
     @Test
-    void isUserExist_whenUserIsExist_thenReturnTrue() {
+    public void isUserExist_whenUserIsExist_thenReturnTrue() {
         String sessionId = "test-session-id";
         when(userDAO.findBySessionId(sessionId)).thenReturn(new UserEntity(sessionId));
         assertTrue(userService.isUserExists(sessionId));
     }
 
     @Test
-    void addUser_whenSaveUserInDB_thenUserSaved() {
+    public void addUser_whenSaveUserInDB_thenUserSaved() {
         String sessionId = "test-session-id";
         UserEntity newUser = new UserEntity(sessionId);
         userService.addUser(newUser);
@@ -55,7 +55,7 @@ class UserServiceTest {
     }
 
     @Test
-    void getUserBySessionId_whenUserIsExist_thenUserJustReturned() {
+    public void getUserBySessionId_whenUserIsExist_thenUserJustReturned() {
         String sessionId = "test-session-id";
         UserEntity user = new UserEntity(sessionId);
         when(userDAO.findBySessionId(sessionId)).thenReturn(user);
@@ -66,7 +66,7 @@ class UserServiceTest {
     }
 
     @Test
-    void getUserBySessionId_whenUserNotExist_thenUserSavedAndReturned() {
+    public void getUserBySessionId_whenUserNotExist_thenUserSavedAndReturned() {
         String sessionId = "test-session-id";
         int id = 101;
         UserEntity user = new UserEntity(sessionId);

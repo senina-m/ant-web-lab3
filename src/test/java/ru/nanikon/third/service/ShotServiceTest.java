@@ -1,7 +1,7 @@
 package ru.nanikon.third.service;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -23,20 +23,20 @@ import static org.mockito.Mockito.when;
  */
 @ExtendWith(MockitoExtension.class)
 @RunWith(MockitoJUnitRunner.class)
-class ShotServiceTest {
+public class ShotServiceTest {
     private ShotService shotService;
 
     @Mock
     private ShotDAO shotDAO;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         shotService = new ShotService();
         shotService.setShotDAO(shotDAO);
     }
 
     @Test
-    void getAllBySessionId_whenNoShotWithThisSessionId_thenEmptyListReturned() {
+    public void getAllBySessionId_whenNoShotWithThisSessionId_thenEmptyListReturned() {
         String sessionId = "test-session-id";
         List<ShotEntity> wait = new LinkedList<>();
         when(shotDAO.findAllBySessionId(sessionId)).thenReturn(wait);
@@ -46,7 +46,7 @@ class ShotServiceTest {
     }
 
     @Test
-    void getAllBySessionId_whenExistShotWithThisSessionId_thenTheyInListReturned() {
+    public void getAllBySessionId_whenExistShotWithThisSessionId_thenTheyInListReturned() {
         String sessionId = "test-session-id";
         UserEntity owner = new UserEntity(sessionId);
         ShotEntity shot = new ShotEntity(owner, 1, 1, 2);
@@ -59,7 +59,7 @@ class ShotServiceTest {
     }
 
     @Test
-    void addShot_whenSaveShotInDB_thenShotSaved() {
+    public void addShot_whenSaveShotInDB_thenShotSaved() {
         ShotEntity shot = new ShotEntity();
         shotService.addShot(shot);
         verify(shotDAO).save(shot);
