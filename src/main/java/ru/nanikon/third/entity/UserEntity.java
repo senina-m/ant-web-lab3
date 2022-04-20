@@ -12,7 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.io.Serializable;
 
-/**
+/** Entity describing the user. It is considered that one user corresponds to one session
+ *
  * @author Natalia Nikonova
  */
 @Data

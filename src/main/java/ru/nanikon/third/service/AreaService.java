@@ -7,7 +7,8 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import java.util.ArrayList;
 
-/**
+/** Processes the user's request: determines whether the shot hit the area
+ *
  * @author Natalia Nikonova
  */
 @ManagedBean(name = "areaCheckService")

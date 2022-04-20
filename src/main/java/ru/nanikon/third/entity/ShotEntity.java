@@ -14,7 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-/**
+/** Entity describing the shot: the user's request and the result of its processing
+ *
  * @author Natalia Nikonova
  */
 @Data

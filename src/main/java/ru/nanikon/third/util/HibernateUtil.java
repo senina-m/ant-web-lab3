@@ -5,7 +5,8 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-/**
+/** Hibernate's utils. Encapsulates the creation of a session factory and its destruction
+ *
  * @author Natalia Nikonova
  */
 public class HibernateUtil {

@@ -10,7 +10,8 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-/**
+/** Writes a list from ShotEntity in json-timing format
+ *
  * @author Natalia Nikonova
  */
 @ManagedBean(name = "parser")

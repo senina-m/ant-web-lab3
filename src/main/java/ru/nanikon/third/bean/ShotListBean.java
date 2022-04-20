@@ -22,6 +22,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * The bean used when transmitting the server response to the table and to the graph
+ *
  * @author Natalia Nikonova
  */
 @ManagedBean(name = "shotList")

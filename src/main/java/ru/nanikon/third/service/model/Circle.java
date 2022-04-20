@@ -1,6 +1,7 @@
 package ru.nanikon.third.service.model;
 
-/**
+/** Circle with center at the origin and radius r
+ *
  * @author Natalia Nikonova
  */
 public class Circle extends Shape{

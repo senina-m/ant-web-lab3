@@ -13,7 +13,8 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import java.util.List;
 
-/**
+/** Hibernate DAO to work with ShotEntity
+ *
  * @author Natalia Nikonova
  */
 @ManagedBean(name = "shotDAO")

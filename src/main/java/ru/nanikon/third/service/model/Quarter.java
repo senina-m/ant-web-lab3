@@ -2,7 +2,8 @@ package ru.nanikon.third.service.model;
 
 import java.util.function.BiPredicate;
 
-/**
+/** Enum of quaters. Cuts off from the figure those areas of it that do not fall into the specified quarter
+ *
  * @author Natalia Nikonova
  */
 public enum Quarter {

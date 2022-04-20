@@ -12,7 +12,8 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.persistence.PersistenceException;
 
-/**
+/** Hibernate DAO to work with UserEntity
+ *
  * @author Natalia Nikonova
  */
 @ManagedBean(name = "userDAO")
