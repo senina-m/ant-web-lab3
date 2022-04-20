@@ -1,6 +1,7 @@
 package ru.nanikon.third.service.model;
 
-/**
+/** Rect centered at the origin, height r / 2 and width r
+ *
  * @author Natalia Nikonova
  */
 public class HorizontalRect extends Shape{

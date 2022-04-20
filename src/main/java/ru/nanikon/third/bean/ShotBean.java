@@ -7,6 +7,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 /**
+ * The bean used when transmitting a user request to server and server responce to form
+ *
  * @author Natalia Nikonova
  */
 @ManagedBean(name = "shot")

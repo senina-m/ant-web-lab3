@@ -1,6 +1,7 @@
 package ru.nanikon.third.service.model;
 
-/**
+/** Base class of all shapes. Use to check shot. By default, it answers true to any point in the specified quarter.
+ *
  * @author Natalia Nikonova
  */
 abstract public class Shape {

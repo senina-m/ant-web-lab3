@@ -1,6 +1,7 @@
 package ru.nanikon.third.service.model;
 
-/**
+/** Rhomb centered at the origin
+ *
  * @author Natalia Nikonova
  */
 public class Rhomb extends Shape{

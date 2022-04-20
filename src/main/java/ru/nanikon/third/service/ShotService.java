@@ -10,7 +10,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import java.util.List;
 
-/**
+/** Service to work with ShotDAO
+ *
  * @author Natalia Nikonova
  */
 @ManagedBean(name = "shotService")
