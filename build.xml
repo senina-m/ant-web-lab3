@@ -2,13 +2,16 @@
 <project name="ant-web" default="compile" xmlns:ivy="antlib:org.apache.ivy.ant">
 
     <!-- define names of directories -->
-    <property name="lib" location="lib"/>
-    <property name="build" location="build"/>
-    <property name="main.build.dir" value="${build}/classes/java/main"/>
+    <property name="lib.dir" location="lib"/>
+    <property name="build.dir" location="build"/>
+    <property name="main.build.dir" value="${build.dir}/classes/java/main"/>
     <property name="main.src.dir" value="src/main/java"/>
-    <property name="test.build.dir" value="${build}/classes/java/test"/>
+    <property name="main.resources.dir" value="src/main/resources"/>
+    <property name="test.build.dir" value="${build.dir}/classes/java/test"/>
     <property name="test.src.dir" value="src/test/java"/>
     <property name="test.resources.dir" value="src/test/resources"/>
+    <property name="docs.dir" value="docs"/>
+    <property name="docs.generate.dir" value="${docs.dir}/docs"/>
     <!-- Проверяет установлен ли ivy проверяя есть ли такой (org.apache.ivy.Main) класс в classpath -->
     <available classname="org.apache.ivy.Main" property="ivy.installed" />
 
@@ -30,7 +33,7 @@
     </target>
 
     <target name="retrive" depends="resolve" description="Use ivy to resolve classpaths">
-        <ivy:retrieve sync="true" type="jar" pattern="${lib}/[conf]/[artifact].[ext]"/>
+        <ivy:retrieve sync="true" type="jar" pattern="${lib.dir}/[conf]/[artifact].[ext]"/>
     </target>
 
     <!-- COMPILE TASKS -->
@@ -44,7 +47,7 @@
         </javac>
     </target>
 
-    <target name="test-compile" depends="retrive">
+    <target name="test-compile" depends="main-compile">
         <mkdir dir="${test.build.dir}"/>
         <javac srcdir="${test.src.dir}" destdir="${test.build.dir}" includeAntRuntime="false" source="1.8" target="1.8">
             <classpath>
@@ -54,17 +57,21 @@
         </javac>
     </target>
 
-    <target name="compile" depends="main-compile,test-compile">
-        <echo>Project compiled and calsses are in build/classes directory</echo>
+    <target name="compile" depends="test-compile">
+        <echo>Project compiled and classes are in build/classes directory</echo>
     </target>
 
     <target name="build" depends="main-compile">
-        <jar destfile="${build}/${ant.project.name}.jar" basedir="${main.build.dir}" />
+        <jar destfile="${build.dir}/${ant.project.name}.jar">
+            <fileset dir="${main.build.dir}"/>
+            <fileset dir="${main.resources.dir}"/>
+        </jar>
     </target>
 
     <target name="clean">
         <delete dir="${main.build.dir}"/>
         <delete dir="${test.build.dir}"/>
+        <delete dir="${docs.dir}"/>
     </target>
 
     <target name="test" depends="compile">
@@ -80,6 +87,28 @@
                 <fileset dir="${test.src.dir}" includes="**/*Test.java" excludes="**/AbstractDAOTest.java"/>
             </batchtest>
         </junit>
+    </target>
+
+    <target name="doc" depends="build">
+        <signjar jar="${build.dir}/${ant.project.name}.jar"
+                 alias="ant-web3"
+                 storepass="Errno!1"
+                 keystore="ant_keystore"
+                 sigalg="MD5withRSA"
+                 digestalg="SHA1"/>
+        <javadoc sourcepath="${main.src.dir}"
+                 destdir="${docs.generate.dir}"
+                 author="true"
+                 version="true"
+                 use="true">
+            <classpath>
+                <path refid="compile.path"/>
+            </classpath>
+        </javadoc>
+        <jar destfile="${build.dir}/${ant.project.name}.jar"
+             basedir="${docs.dir}"
+             update="true">
+        </jar>
     </target>
 
 </project>
