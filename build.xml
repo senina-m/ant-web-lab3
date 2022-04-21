@@ -105,7 +105,7 @@
         </junit>
     </target>
 
-    <target name="commit">
+    <target name="diff">
         <exec executable="/bin/bash">
             <arg value="${path.sh}"/>
         </exec>
