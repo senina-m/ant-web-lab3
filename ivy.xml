@@ -8,6 +8,8 @@
     </configurations>
 
     <dependencies defaultconf="compile">
+
+        <dependency org="org.apache.ant" name="ant-junit4" rev="1.8.4" />
         <dependency org="junit" name="junit" rev="4.13.1"/>
         <dependency org="javax.faces" name="javax.faces-api" rev="2.3" conf="compile->default" />
         <dependency org="javax.servlet" name="javax.servlet-api" rev="4.0.1" conf="compile->default"/>
