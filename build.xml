@@ -9,6 +9,8 @@
     <property name="main.resources.dir" value="src/main/resources"/>
     <property name="test.build.dir" value="${build.dir}/classes/java/test"/>
     <property name="test.src.dir" value="src/test/java"/>
+    <property name="task.src.dir" value="src/antTasks" />
+    <property name="task.build.dir" value="${build.dir}/classes/java/diffTasks" />
     <property name="test.resources.dir" value="src/test/resources"/>
     <property name="path.sh" value="${basedir}/commit.sh"/>
 
@@ -22,6 +24,7 @@
     <property name="ivy.home" value="${user.home}/.ant" />
     <property name="ivy.jar.dir" value="${ivy.home}/lib" />
     <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
+
 
     <target name="install-ivy" description="Install ivy">
        <mkdir dir="${user.home}/.ant/lib"/>
@@ -41,20 +44,20 @@
         <!-- RESOLVE CLASSPATHS -->
     <target name="resolve" description="Use ivy to resolve classpaths">
         <ivy:resolve/>
-
         <ivy:report todir='build/ivy' graph='false' xml='false'/>
         <ivy:cachepath pathid="compile.path" conf="compile"/>
         <ivy:cachepath pathid="runtime.path" conf="runtime"/>
         <ivy:cachepath pathid="test.path"    conf="test"/>
+        <ivy:cachepath pathid="diffTasks.path" conf="diff_task"/>
     </target>
 
-    <target name="retrive" depends="resolve" description="Use ivy to resolve classpaths">
+    <target name="retrieve" depends="resolve" description="Use ivy to resolve classpaths">
         <ivy:retrieve sync="true" type="jar" pattern="${lib.dir}/[conf]/[artifact].[ext]"/>
     </target>
 
     <!-- COMPILE TASKS -->
 
-    <target name="main-compile" depends="retrive">
+    <target name="main-compile" depends="retrieve">
         <mkdir dir="${main.build.dir}"/>
         <javac srcdir="${main.src.dir}" destdir="${main.build.dir}" includeAntRuntime="false">
             <classpath>
@@ -105,11 +108,23 @@
         </junit>
     </target>
 
-    <target name="diff">
-        <exec executable="/bin/bash">
-            <arg value="${path.sh}"/>
-        </exec>
+    <target name="jar_diff" depends="retrieve">
+        <mkdir dir="${task.build.dir}"/>
+        <javac srcdir="${task.src.dir}" destdir="${lib.dir}" includeAntRuntime="false">
+            <classpath>
+                <path refid="diffTasks.path"/>
+                <pathelement location="${task.build.dir}"/>
+            </classpath>
+        </javac>
+        <jar destfile="./lib/diff_task/app.jar" basedir="${task.build.dir}" />
     </target>
+
+    <target name="diff" depends="jar_diff">
+        <taskdef name="diff" classname="DiffTask" classpath="./lib/diffTask.jar"/>
+        <diff/>
+        <exec executable="/bin/bash"/>
+    </target>
+
     <target name="doc" depends="build">
         <signjar jar="${build.dir}/${ant.project.name}.jar"
                  alias="ant-web3"

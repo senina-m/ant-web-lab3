@@ -5,9 +5,15 @@
         <conf name="compile" description="Required to compile application"/>
         <conf name="runtime" description="Additional run-time dependencies" extends="compile"/>
         <conf name="test"    description="Required for test only" extends="runtime"/>
+        <conf name="diff_task" description="Required for task diff compile"/>
     </configurations>
 
     <dependencies defaultconf="compile">
+        <!-- https://mvnrepository.com/artifact/org.tmatesoft/svn -->
+        <dependency org="org.tmatesoft" name="svn" rev="1.1.0" conf="diff_task->default"/>
+        <!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->
+        <dependency org="org.apache.ant" name="ant" rev="1.10.12" conf="diff_task->default"/>
+
 
         <dependency org="org.apache.ant" name="ant-junit4" rev="1.8.4" />
         <dependency org="junit" name="junit" rev="4.13.1"/>
@@ -40,26 +46,3 @@
         <dependency org="org.dbunit" name="dbunit" rev="2.7.2" conf="test->default"/>
     </dependencies>
 </ivy-module>
-
-<!-- implementation 'junit:junit:4.13.1'
-        compileOnly 'javax.faces:javax.faces-api:2.3'
-        compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
-        implementation 'org.hibernate:hibernate-core:5.6.1.Final'
-
-        compileOnly 'com.oracle.database.jdbc:ojdbc8:21.1.0.0'
-        compileOnly 'com.oracle.ojdbc:orai18n:19.3.0.0'
-
-        compileOnly 'org.projectlombok:lombok:1.18.22'
-        annotationProcessor 'org.projectlombok:lombok:1.18.22'
-
-        implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.1'
-        implementation 'com.jwebmp.jackson.datatype:jackson-datatype-jsr310:0.63.0.19'
-
-        implementation 'org.primefaces:primefaces:10.0.0'
-
-        testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
-        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
-        testCompileOnly('org.mockito:mockito-core:4.0.0')
-        testImplementation('org.mockito:mockito-junit-jupiter:4.0.0')
-        testImplementation('com.h2database:h2:2.0.202')
-        testImplementation('org.dbunit:dbunit:2.7.2') -->
