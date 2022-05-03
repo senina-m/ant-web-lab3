@@ -10,7 +10,6 @@
     <property name="test.build.dir" value="${build.dir}/classes/java/test"/>
     <property name="test.src.dir" value="src/test/java"/>
     <property name="test.resources.dir" value="src/test/resources"/>
-
     <property name="path.sh" value="${basedir}/commit.sh"/>
 
     <property name="docs.dir" value="docs"/>
@@ -23,7 +22,6 @@
     <property name="ivy.home" value="${user.home}/.ant" />
     <property name="ivy.jar.dir" value="${ivy.home}/lib" />
     <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
-
 
     <target name="install-ivy" description="Install ivy">
        <mkdir dir="${user.home}/.ant/lib"/>
@@ -43,11 +41,12 @@
         <!-- RESOLVE CLASSPATHS -->
     <target name="resolve" description="Use ivy to resolve classpaths">
         <ivy:resolve/>
+
         <ivy:report todir='build/ivy' graph='false' xml='false'/>
         <ivy:cachepath pathid="compile.path" conf="compile"/>
         <ivy:cachepath pathid="runtime.path" conf="runtime"/>
         <ivy:cachepath pathid="test.path"    conf="test"/>
-        <ivy:cachepath pathid="diffTasks.path" conf="diff_task"/>
+        <ivy:cachepath pathid="diffTasks.path" conf="test"/>
     </target>
 
     <target name="retrieve" depends="resolve" description="Use ivy to resolve classpaths">
@@ -107,22 +106,20 @@
         </junit>
     </target>
 
-    <property name="task.src.dir" value="src/antTasks/main/java" />
-    <property name="task.classpath" value="ru.senina.itmo.DiffTask"/>
-    <property name="lib.dir.diff_task" value="${lib.dir}/diff_task" />
-    <property name="task.build.dir" value="${build.dir}/classes/java/diffTasks/"/>
-    <property name="task_diff.jar" value="${lib.dir.diff_task}/diffTask.jar"/>
+    <property name="diff.build.dir" value="build/classes/java/diff"/>
+    <property name="diff.src.dir" value="src"/>
+    <property name="diff.jar" value="diff.jar"/>
 
     <target name="jar_diff" depends="retrieve">
-        <mkdir dir="${task.build.dir}"/>
-        <javac srcdir="${task.src.dir}" destdir="${task.build.dir}" includeAntRuntime="false">
+        <mkdir dir="${diff.build.dir}"/>
+        <javac srcdir="${diff.src.dir}" destdir="${diff.build.dir}" includeAntRuntime="false">
             <classpath>
                 <path refid="diffTasks.path"/>
                 <pathelement location="${lib.dir.diff_task}"/>
             </classpath>
         </javac>
 
-        <jar destfile="${task_diff.jar}" basedir="${task.build.dir}">
+        <jar destfile="${diff.jar}" basedir="${diff.build.dir}">
             <manifest>
                 <attribute name="Main-Class" value="ru.senina.itmo.antTasks.DiffTask"/>
             </manifest>
@@ -130,8 +127,7 @@
     </target>
 
     <target name="diff" depends="jar_diff">
-        <taskdef name="diff" classname="DiffTask" classpath="${task_diff.jar}"/>
-        
+        <taskdef name="diff" classname="DiffTask" classpath="${diff.jar}"/> 
         <diff 
             username="s312986"
             password=""
@@ -143,6 +139,7 @@
             <!-- <arg value="${path.sh}"/> -->
         <!-- </exec> -->
     </target>
+
 
     <target name="doc" depends="build">
         <signjar jar="${build.dir}/${ant.project.name}.jar"

@@ -1,5 +1,3 @@
-package ru.seina.itmo.antTasks;
-
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import java.io.BufferedReader;
