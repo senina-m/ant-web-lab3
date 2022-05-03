@@ -9,9 +9,8 @@
     <property name="main.resources.dir" value="src/main/resources"/>
     <property name="test.build.dir" value="${build.dir}/classes/java/test"/>
     <property name="test.src.dir" value="src/test/java"/>
-    <property name="task.src.dir" value="src/antTasks" />
-    <property name="task.build.dir" value="${build.dir}/classes/java/diffTasks" />
     <property name="test.resources.dir" value="src/test/resources"/>
+
     <property name="path.sh" value="${basedir}/commit.sh"/>
 
     <property name="docs.dir" value="docs"/>
@@ -108,21 +107,41 @@
         </junit>
     </target>
 
+    <property name="task.src.dir" value="src/antTasks/main/java" />
+    <property name="task.classpath" value="ru.senina.itmo.DiffTask"/>
+    <property name="lib.dir.diff_task" value="${lib.dir}/diff_task" />
+    <property name="task.build.dir" value="${build.dir}/classes/java/diffTasks/"/>
+    <property name="task_diff.jar" value="${lib.dir.diff_task}/diffTask.jar"/>
+
     <target name="jar_diff" depends="retrieve">
         <mkdir dir="${task.build.dir}"/>
-        <javac srcdir="${task.src.dir}" destdir="${lib.dir}" includeAntRuntime="false">
+        <javac srcdir="${task.src.dir}" destdir="${task.build.dir}" includeAntRuntime="false">
             <classpath>
                 <path refid="diffTasks.path"/>
-                <pathelement location="${task.build.dir}"/>
+                <pathelement location="${lib.dir.diff_task}"/>
             </classpath>
         </javac>
-        <jar destfile="./lib/diff_task/app.jar" basedir="${task.build.dir}" />
+
+        <jar destfile="${task_diff.jar}" basedir="${task.build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="ru.senina.itmo.antTasks.DiffTask"/>
+            </manifest>
+        </jar>
     </target>
 
     <target name="diff" depends="jar_diff">
-        <taskdef name="diff" classname="DiffTask" classpath="./lib/diffTask.jar"/>
-        <diff/>
-        <exec executable="/bin/bash"/>
+        <taskdef name="diff" classname="DiffTask" classpath="${task_diff.jar}"/>
+        
+        <diff 
+            username="s312986"
+            password=""
+            repositoryPath=""
+            svnRepoBase=""
+            classesNamesPath=""/>
+         <!-- <taskdef  name=”simpletask” classname=”org.example.antbook.tasks.SimpleTask” classpath=”${build.dir}”> -->
+        <!-- <exec executable="/bin/bash"> -->
+            <!-- <arg value="${path.sh}"/> -->
+        <!-- </exec> -->
     </target>
 
     <target name="doc" depends="build">

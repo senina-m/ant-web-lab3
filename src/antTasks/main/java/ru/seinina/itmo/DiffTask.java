@@ -1,4 +1,4 @@
-package src.antTasks;
+package ru.seina.itmo.antTasks;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
@@ -47,6 +47,7 @@ class DiffTask extends Task{
 
     @Override
     public void execute() throws BuildException {
+        System.out.println("Diff start!");
         // BuildException
         try (BufferedReader br = new BufferedReader(new FileReader(classesNamesPath))) {
             String line;
