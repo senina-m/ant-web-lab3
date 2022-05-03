@@ -9,6 +9,7 @@ import org.tmatesoft.svn.core.SVNCommitInfo;
 import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.SVNURL;
 import org.tmatesoft.svn.core.auth.ISVNAuthenticationManager;
+import org.tmatesoft.svn.core.internal.io.fs.FSRepositoryFactory;
 import org.tmatesoft.svn.core.io.SVNRepository;
 import org.tmatesoft.svn.core.io.SVNRepositoryFactory;
 import org.tmatesoft.svn.core.wc.*;
@@ -77,6 +78,7 @@ public class DiffTask extends Task{
 
 //    https://stackoverflow.com/questions/23245684/ways-to-automate-svn-process-using-java
     public SVNClientManager getSVNClientManager() throws SVNException {
+        FSRepositoryFactory.setup();
         SVNURL url = SVNURL.parseURIDecoded(svnRepoBase);
         SVNRepository repository = SVNRepositoryFactory.create(url, null);
         ISVNOptions myOptions = SVNWCUtil.createDefaultOptions(true);

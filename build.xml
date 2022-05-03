@@ -132,13 +132,13 @@
 
     <target name="diff" depends="jar_diff">
         <taskdef name="diff" classname="DiffTask" classpath="${diff.jar}"/>
-        <echo message="${ant.file}/commit_classes" /> 
+сщ        <echo message="${basedir}/commit_classes" />
         <diff 
             username=""
             password=""
-            repositoryPath=""
-            svnRepoBase=""
-            classesNamesPath="${ant.file}/commit_classes"/>
+            repositoryPath="file:///home/s312986/ProgMethods/lab3-repo/branches/trunck/web-lab3"
+            svnRepoBase="file:///home/s312986/ProgMethods/lab3-repo"
+            classesNamesPath="${basedir}/commit_classes"/>
         <!-- <taskdef  name=”simpletask” classname=”org.example.antbook.tasks.SimpleTask” classpath=”${build.dir}”> -->
         <!-- <exec executable="/bin/bash"> -->
             <!-- <arg value="${path.sh}"/> -->
