@@ -46,7 +46,7 @@
         <ivy:cachepath pathid="compile.path" conf="compile"/>
         <ivy:cachepath pathid="runtime.path" conf="runtime"/>
         <ivy:cachepath pathid="test.path"    conf="test"/>
-        <ivy:cachepath pathid="diffTasks.path" conf="test"/>
+        <ivy:cachepath pathid="diff.path" conf="diff_task"/>
     </target>
 
     <target name="retrieve" depends="resolve" description="Use ivy to resolve classpaths">
@@ -107,34 +107,39 @@
     </target>
 
     <property name="diff.build.dir" value="build/classes/java/diff"/>
-    <property name="diff.src.dir" value="src"/>
+    <property name="diff.src.dir" value="src/diff"/>
+    <property name="diff.dependencies.dir" value="${lib.dir}/diff_task"/>
+    <property name="diff.dependencies" value="${lib.dir}/diff_task/ant.jar ${lib.dir}/diff_task/svn.jar ${lib.dir}/diff_task/ant-launcher.jar"/>
     <property name="diff.jar" value="diff.jar"/>
 
     <target name="jar_diff" depends="retrieve">
+
         <mkdir dir="${diff.build.dir}"/>
         <javac srcdir="${diff.src.dir}" destdir="${diff.build.dir}" includeAntRuntime="false">
             <classpath>
-                <path refid="diffTasks.path"/>
-                <pathelement location="${lib.dir.diff_task}"/>
+                <path refid="diff.path"/>
+                <pathelement location="${diff.dependencies.dir}"/>
             </classpath>
         </javac>
 
         <jar destfile="${diff.jar}" basedir="${diff.build.dir}">
             <manifest>
                 <attribute name="Main-Class" value="ru.senina.itmo.antTasks.DiffTask"/>
+                <attribute name="Class-Path" value="${diff.dependencies}"/>
             </manifest>
         </jar>
     </target>
 
     <target name="diff" depends="jar_diff">
-        <taskdef name="diff" classname="DiffTask" classpath="${diff.jar}"/> 
+        <taskdef name="diff" classname="DiffTask" classpath="${diff.jar}"/>
+        <echo message="${ant.file}/commit_classes" /> 
         <diff 
-            username="s312986"
+            username=""
             password=""
             repositoryPath=""
             svnRepoBase=""
-            classesNamesPath=""/>
-         <!-- <taskdef  name=”simpletask” classname=”org.example.antbook.tasks.SimpleTask” classpath=”${build.dir}”> -->
+            classesNamesPath="${ant.file}/commit_classes"/>
+        <!-- <taskdef  name=”simpletask” classname=”org.example.antbook.tasks.SimpleTask” classpath=”${build.dir}”> -->
         <!-- <exec executable="/bin/bash"> -->
             <!-- <arg value="${path.sh}"/> -->
         <!-- </exec> -->

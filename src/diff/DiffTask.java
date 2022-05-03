@@ -14,7 +14,7 @@ import org.tmatesoft.svn.core.io.SVNRepositoryFactory;
 import org.tmatesoft.svn.core.wc.*;
 
 
-class DiffTask extends Task{
+public class DiffTask extends Task{
     private String username;
     private String password;
     //<path to repository root (not to a working copy>
@@ -23,7 +23,15 @@ class DiffTask extends Task{
     private String svnRepoBase;
     private String classesNamesPath;
 
-    DiffTask() throws IOException{}
+    public void DiffTask(){}
+
+    public void DiffTask(String username, String password, String repositoryPath, String svnRepoBase, String classesNamesPath){
+        this.username = username;
+        this.password = password;
+        this.repositoryPath = repositoryPath;
+        this.svnRepoBase = svnRepoBase;
+        this.classesNamesPath = classesNamesPath;
+    }
 
     public void setRepositoryPath(String repositoryPath) {
         this.repositoryPath = repositoryPath;
@@ -72,11 +80,11 @@ class DiffTask extends Task{
         SVNURL url = SVNURL.parseURIDecoded(svnRepoBase);
         SVNRepository repository = SVNRepositoryFactory.create(url, null);
         ISVNOptions myOptions = SVNWCUtil.createDefaultOptions(true);
-        ISVNAuthenticationManager myAuthManager = SVNWCUtil.createDefaultAuthenticationManager(username, password);
-        repository.setAuthenticationManager(myAuthManager);
+        // ISVNAuthenticationManager myAuthManager = SVNWCUtil.createDefaultAuthenticationManager(username, password);
+        // repository.setAuthenticationManager(myAuthManager);
         //clientManager will be used to get different kind of svn clients instances to do different activities
         //like update, commit, view diff etc.
-        return SVNClientManager.newInstance(myOptions, myAuthManager);
+        return SVNClientManager.newInstance(myOptions);
     }
 
     private String getStatus(SVNClientManager clientManager, String classNamePath) throws SVNException {
